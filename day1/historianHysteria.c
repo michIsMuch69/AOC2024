@@ -3,73 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   historianHysteria.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jean-micheldusserre <jean-micheldusserr    +#+  +:+       +#+        */
+/*   By: michismuch <michismuch@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/01 15:55:36 by jean-michel       #+#    #+#             */
-/*   Updated: 2024/12/01 16:56:35 by jean-michel      ###   ########.fr       */
+/*   Created: 2024/12/01 17:54:37 by michismuch        #+#    #+#             */
+/*   Updated: 2024/12/01 18:22:18 by michismuch       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include <stdio.h>
 #include <fcntl.h>
-#include <readline/readline.h>
 #include "./get_next_line/get_next_line.h"
 
-void copy_nbs(char *nb1, char *nb2, char *line)
+void copy_nbs(char *line, char *nb1, char *nb2)
 {
-    strncpy(nb1, line, 5);
-    strlcpy(nb2, line + 8, 6);
-}
-void copy_to_lists(int *list1, int *list2, char *nb1, char *nb2, int i)
-{
-    list1[i] = atoi(nb1);
-    list2[i] = atoi(nb2);
+    int i = 0;
+    while(line[i] && line[i] != 32)
+    {
+        nb1[i] = line[i];
+        i++;   
+    }
+    nb1[i] = '\0';
+    while (line[i] == 32)
+        i++;
+    int j = 0;
+    while(line[i] != '\0')
+    {
+        nb2[j] == line[i];
+        j++;
+        i++;
+    }
+    nb2[j] = '\0';
 }
 
 int main(void)
 {
-    int fd;
-    char *line;
+    char    *line;
+    int      fd;
     char nb1[6];
     char nb2[6];
-    int list1[998];
-    int list2[998];
-
     
-    fd = open("input.txt", O_RDONLY);
+    fd = open("./input.txt", O_RDONLY);
     line = get_next_line(fd);
     
+    copy_nbs(line, nb1, nb2);
     
-    int i = 0;
-    copy_nbs(nb1, nb2, line);
-    copy_to_lists(list1, list2, nb1, nb2, i);
-    while(line)
-    {
-        i++;
-        copy_nbs(nb1, nb2, line);
-        copy_to_lists(list1, list2, nb1, nb2, i);
-        free(line);
-        line = get_next_line(fd);
-    }
     printf("nb1 = %s\n", nb1);
     printf("nb2 = %s\n", nb2);
-    printf("list1[0] = %d\n", list1[i]);
-    printf("list1[0] = %d\n", list2[i]);
     
-    // int j = 0;
-    // printf("List 1 ! : \n");
-    // while (list1[j])
-    // {
-    //     printf("list1[j] = %d\n", list1[j]);
-    //     j++;
-    // }
     
-    // j = 0;
-    // printf("List 2 ! : \n");
-    // while (list2[j])
-    // {
-    //     printf("list2[j] = %d\n", list2[j]);
-    //     j++;
-    // }
+    
+    
     
 }
